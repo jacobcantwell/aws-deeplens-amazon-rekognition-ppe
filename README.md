@@ -216,6 +216,58 @@ def lambda_handler(event, context):
 * Click Add.
 * Click Save on the top right to save the changes to the Lambda function.
 
+### Create Lamba test event
+
+Take a photo of yourself with a face mask on and upload it to your S3 bucket deeplens-ppe-people-detected.
+
+
+1. Go to Lambda in AWS Console at https://console.aws.amazon.com/lambda/
+2. Click on your deeplens-ppe-call-rekognition function.
+3. Under the code source section, click the down arrow on the Test button, click Configure test event.
+4. Click Create new test event
+5. Enter event name s3ImageUpload
+6. Update the JSON below and copy it to the test event body
+
+```json
+{
+  "Records": [
+    {
+      "s3": {
+        "bucket": {
+          "name": "deeplens-ppe-people-detected
+        },
+        "object": {
+          "key": "[--insert-name-image--]"
+        }
+      }
+    }
+  ]
+}
+```
+
+7. Click Create
+8. Click Test
+
+If the Lambda function is working you will see output similar to:
+
+```json
+Test Event Name
+s3ImageUpload
+
+Response
+{
+  "ImageUrl": "https://[--insert-bucket-name--].s3.amazonaws.com/[--insert-file-key--]?AWSAccessKeyId=...",
+  "Persons": 1,
+  "PersonsWithFacecover": 1,
+  "PersonsWithoutFacecover": 0,
+  "RekognitionResponse": {
+    "ProtectiveEquipmentModelVersion": "1.0",
+    ....
+  },
+  "statusCode": 200
+}
+```
+
 ### Create an AWS DeepLens inference Lambda function
 
 1. Go to AWS Lambda in AWS Console at https://console.aws.amazon.com/lambda/.
