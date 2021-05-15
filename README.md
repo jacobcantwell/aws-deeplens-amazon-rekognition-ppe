@@ -1,13 +1,20 @@
-# Worker safety with AWS DeepLens and Amazon Rekognition
+# Detect Protective Equipment with AWS DeepLens and Amazon Rekognition
 
-Use AWS DeepLens and Amazon Rekognition to build an application that helps identify if a person at a construction site is wearing the right safety gear, in this case, a hard hat. 
+With AWS DeepLens and Amazon Rekognition PPE detection, you can analyze images from your AWS Deeplens cameras to automatically detect if people are wearing the required protective equipment, such as face covers (surgical masks, N95 masks, cloth masks), head covers (hard hats or helmets), and hand covers (surgical gloves, safety gloves, cloth gloves). Using these results, you can trigger timely alarms or notifications to remind people to wear PPE before or during their presence in a hazardous area to help improve or maintain everyone’s safety.
+
+Amazon Rekognition is a machine learning based image and video analysis service that enables developers to build smart applications using computer vision. Developers can quickly take advantage of different APIs to identify objects, people, text, scene and activities in images and videos, as well as inappropriate content.
+
+You can also aggregate the PPE detection results and analyze them by time and place to identify how safety warnings or training practices can be improved or generate reports for use during regulatory audits. For example, a construction company can check if construction workers are wearing head covers and hand covers when they’re on the construction site and remind them if one or more PPE isn’t detected to support their safety in case of accidents. A food processing company can check for PPE such as face covers and hand covers on employees working in non-contamination zones to comply with food safety regulations. Or a manufacturing company can analyze PPE detection results across different sites and plants to determine where they should add more hazard warning signage and conduct additional safety training.
+
+With Amazon Rekognition PPE detection, you receive a detailed analysis of an image, which includes bounding boxes and confidence scores for persons (up to 15 per image) and PPE detected, confidence scores for the body parts detected, and Boolean values and confidence scores for whether the PPE covers the corresponding body part. The following image shows an example of PPE bounding boxes for head cover, hand covers, and face cover annotated using the analysis provided by the Amazon Rekognition PPE detection feature.
+
 
 ## Learning objectives
 In this lab you will learn the following:
 - Create and deploy an object detection project to AWS DeepLens.
 - Modify the AWS DeepLens object detection inference Lambda function to detect persons and upload the frame to Amazon S3.
-- Create a Lambda function to identify persons who are not wearing safety hats.
-- Analyze the results using AWS IoT , Amazon CloudWatch and a web dashboard.
+- Create a Lambda function to identify persons who are wearing the required protective equipment such as face covers, head covers, and hand covers.
+- Analyze the results using AWS IoT, Amazon CloudWatch and a web dashboard.
 
 ## Architecture
 
@@ -17,7 +24,7 @@ Follow the modules below or refer to the online course to learn how to build the
 
 ## Online course 
 
-[![Online Course](worker-safety-sc.png)](https://www.aws.training/learningobject/wbc?id=32077)
+The online course [![Worker Safety Project with AWS DeepLens](worker-safety-sc.png)](https://www.aws.training/learningobject/wbc?id=32077) is a great resource that describes a similar project for identifying individuals on a construction site who aren’t wearing hard hats.
 
 https://www.aws.training/Details/eLearning?id=32077
 
@@ -38,7 +45,6 @@ https://www.aws.training/Details/eLearning?id=32077
 6. Click Next: Tags and Next: Review
 7. Name is “RecognizeObjectLambdaRole”
 8. Click Create role
-
 
 ### Setup an AWS IAM role for AWS DeepLens Lambda function
 
@@ -88,7 +94,7 @@ https://www.aws.training/Details/eLearning?id=32077
 1. Under Environment variables, add a variable:
 
 * Key: iot_topic
-* Value: worker-safety-demo-cloud
+* Value: deeplens-ppe-demo
 
 1. Copy the code from [cloud-lambda.py](./code/cloud-lambda.py) and paste it under the Function code for the Lambda function. 
 2. Click Save.
