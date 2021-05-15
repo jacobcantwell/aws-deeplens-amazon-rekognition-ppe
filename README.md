@@ -24,7 +24,7 @@ Follow the modules below or refer to the online course to learn how to build the
 
 ## Online course 
 
-The online course [![Worker Safety Project with AWS DeepLens](worker-safety-sc.png)](https://www.aws.training/learningobject/wbc?id=32077) is a great resource that describes a similar project for identifying individuals on a construction site who aren’t wearing hard hats.
+The online course [Worker Safety Project with AWS DeepLens](https://www.aws.training/learningobject/wbc?id=32077) is a great resource that describes a similar project for identifying individuals on a construction site who aren’t wearing hard hats.
 
 https://www.aws.training/Details/eLearning?id=32077
 
