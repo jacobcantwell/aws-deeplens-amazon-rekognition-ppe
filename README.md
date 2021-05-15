@@ -126,7 +126,6 @@ def getPersonsAndFaceCovers(rekognitionResponse):
         personsWithoutFacecover.append(person)
     return (rekognitionResponse, personsWithFacecover, personsWithoutFacecover)
 
-
 def detectProtectiveEquipment(bucketName, imageName):
     print("start detectProtectiveEquipment")
     rekognition = boto3.client('rekognition', region_name='us-east-1')
@@ -147,7 +146,7 @@ def detectProtectiveEquipment(bucketName, imageName):
     return getPersonsAndFaceCovers(rekognitionResponse)
 
 def sendMessageToIoTTopic(iotMessage):
-    topicName = "worker-safety"
+    topicName = "deeplens-ppe-v1"
     if "IOT_TOPIC" in os.environ:
         topicName = os.environ['IOT_TOPIC']
     iotClient = boto3.client('iot-data', region_name='us-east-1')
@@ -188,7 +187,7 @@ def lambda_handler(event, context):
 
     pushToCloudWatch('Persons', personsCount)
     pushToCloudWatch('PersonsWithFacecover', personsWithFacecoverCount)
-    pushToCloudWatch('PersonsWithoutSafetyHat', personsWithoutFacecoverCount)
+    pushToCloudWatch('PersonsWithoutFacecover', personsWithoutFacecoverCount)
 
     s3_client = boto3.client('s3')
     imageUrl = s3_client.generate_presigned_url('get_object', Params={'Bucket': bucketName, 'Key': imageName })
