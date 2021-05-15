@@ -561,30 +561,53 @@ greengrass_infinite_infer_run()
 8. Expand View Details
 9. Under: Your unauthenticated identities would like access to Cognito, expand View Policy Document and click Edit.
 10. Click Ok for Edit Policy prompt.
-11. Copy JSON from [cognitopolicy.json](./code/cognitopolicy.json) and paste in the text box.
-12. Click Allow
-13. Make a note of the Identity Pool as you will need it in the following steps.
-14. Go to AWS IoT in AWS Console at: https://console.aws.amazon.com/iot
-15. Click on settings and make a note of the endpoint, you will need this the following step.
-16. Download [webdashboard.zip](./code/webdashboard.zip) and unzip on your local drive.
-17. Edit aws-configuration.js and update poolId with Cognito Identity Pool Id and host with IoT EndPoint you got in the earlier steps.
-18. From the terminal go to the root of the unzipped folder and run “npm install”
-19. Next, run “./node_modules/.bin/webpack —config webpack.config.js”
-20. This will create a build that we can easily deploy.
-21. Go to Amazon S3 bucket, and create a folder titled "web"
-22. From the web folder in S3 bucket, click upload and select bundle.js, index.html and style.css.
-23. From Set permission, Choose Grant public read access to the objects. and click Next
-24. Leave default settings for following screens and click Upload.
-25. Click on index.html and click on the link to open the web page in browser.
-26. In the address URL append ?iottopic=NAME-OF-YOUR-IOT-TOPIC. This is the same value you added to the Lambda environment variable and hit Enter.
-27. You should now see images coming in from AWS DeepLens with a green or red box around the person. Green indicates the person is wearing a safety hat and red indicates a person who is not. 
+11. Copy the JSON below and paste in the text box.
 
-This completes the application- you have now learnt to build an application that detects if a person at a construction site is wearing a safety hat or not. You can quickly extend this application to detect lab coats or helmets etc. 
+```json
+{
+    "Version": "2012-10-17",
+    "Statement": [
+        {
+            "Effect": "Allow",
+            "Action": [
+                "iot:Connect",
+                "iot:Publish",
+                "iot:Subscribe",
+                "iot:Receive",
+                "iot:GetThingShadow",
+                "iot:UpdateThingShadow",
+                "iot:DeleteThingShadow"
+            ],
+            "Resource": "*"
+        }
+    ]
+}
+```
+
+13. Click Allow
+14. Make a note of the Identity Pool as you will need it in the following steps.
+15. Go to AWS IoT in AWS Console at: https://console.aws.amazon.com/iot
+16. Click on settings and make a note of the endpoint, you will need this the following step.
+17. Download [webdashboard.zip](./code/webdashboard.zip) and unzip on your local drive.
+18. Edit aws-configuration.js and update poolId with Cognito Identity Pool Id and host with IoT EndPoint you got in the earlier steps.
+19. From the terminal go to the root of the unzipped folder and run “npm install”
+20. Next, run “./node_modules/.bin/webpack —config webpack.config.js”
+21. This will create a build that we can easily deploy.
+22. Go to Amazon S3 bucket, and create a folder titled "web"
+23. From the web folder in S3 bucket, click upload and select bundle.js, index.html and style.css.
+24. From Set permission, Choose Grant public read access to the objects. and click Next
+25. Leave default settings for following screens and click Upload.
+26. Click on index.html and click on the link to open the web page in browser.
+27. In the address URL append `?iottopic=deeplens-ppe-v1`. This is the same value you added to the Lambda environment variable and hit Enter.
+28. You should now see images coming in from AWS DeepLens with a green or red box around the person. Green indicates the person is wearing a safety hat and red indicates a person who is not. 
+
+This completes the application. You have now learnt how to build an application that detects if a person is wearing required protective equipment such as face covers, head covers, and hand covers.
+
+## Clean up
 
 Before you exit, make sure you clean up any resources you created as part of this lab. 
 
-## Clean up
-Delete Lambda functions, S3 bucket and IAM roles.
+Delete the Lambda functions, S3 bucket and IAM roles.
 
 ## License Summary
 
